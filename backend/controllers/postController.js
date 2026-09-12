@@ -51,17 +51,5 @@ export const addPost = async (req, res) => {
 }
 
 export const viewPost = async (req, res) => {
-    const post = await prisma.post.findUniqueOrThrow({
-        where: { isPublished: true, id: req.params.postId },
-        select: { 
-            title: true, 
-            dateAdded: true, 
-            content: true,
-            comments: { orderBy: { dateAdded: "desc" } },
-            author: { select: { id: true, username:true } }
-        },
-        orderBy: { dateAdded: "desc" },
-    })
-
-    res.json({ post })
+    res.json({ post: req.locals.post })
 }

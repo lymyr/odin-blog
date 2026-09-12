@@ -27,7 +27,16 @@ export class PostValidation extends Validation {
     static postId = param("postId").trim().exists().withMessage("Please add a postId")
         .isInt().withMessage("postId should be an integer").bail().toInt()
         .custom(async (id, {req}) => {
-            const post = await prisma.post.findFirst({ where: { id, isPublished: true } })
+            const post = await prisma.post.findFirst({
+                where: { isPublished: true, id },
+                select: { 
+                    title: true, 
+                    dateAdded: true, 
+                    content: true,
+                    comments: { orderBy: { dateAdded: "desc" } },
+                    author: { select: { id: true, username:true } }
+                }
+            })
             if (!post)
                 throw new Error("Post doesn't exist")
             if (!req.locals)
