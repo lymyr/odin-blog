@@ -5,24 +5,20 @@ process.loadEnvFile()
 export const getPublicPosts = async (req, res) => {
     const postAmount = 10
 
-    const [admin, posts] = await Promise.all([
-        prisma.user.findFirstOrThrow({ 
-            where: { id: 1 },
-            select: { username: true } 
-        }),
-        prisma.post.findMany({
-            where: { isPublished: true },
-            select: { id: true, title: true, dateAdded: true },
-            orderBy: { dateAdded: "desc" },
-            take: postAmount,
-            skip: req.query.page > 1 ? (parseInt(req.query.page)-1)*postAmount : 0
-        })
-    ])
-
-    res.json({
-        author: admin.username,
-        posts
+    const posts = await prisma.post.findMany({
+        where: { isPublished: true },
+        select: { 
+            id: true, 
+            title: true, 
+            dateAdded: true, 
+            author: { select: { id: true, username:true } } 
+        },
+        orderBy: { dateAdded: "desc" },
+        take: postAmount,
+        skip: req.query.page > 1 ? (parseInt(req.query.page)-1)*postAmount : 0
     })
+
+    res.json({ posts })
 }
 
 export const getPosts = async (req, res) => {
@@ -55,25 +51,17 @@ export const addPost = async (req, res) => {
 }
 
 export const viewPost = async (req, res) => {
-    const [admin, post] = await Promise.all([
-        prisma.user.findFirstOrThrow({ 
-            where: { id: 1 },
-            select: { username: true } 
-        }),
-        prisma.post.findUniqueOrThrow({
-            where: { isPublished: true, id: req.params.postId },
-            select: { 
-                title: true, 
-                dateAdded: true, 
-                content: true,
-                comments: { orderBy: { dateAdded: "desc" } }
-            },
-            orderBy: { dateAdded: "desc" },
-        })
-    ])
-
-    res.json({
-        author: admin.username,
-        post
+    const post = await prisma.post.findUniqueOrThrow({
+        where: { isPublished: true, id: req.params.postId },
+        select: { 
+            title: true, 
+            dateAdded: true, 
+            content: true,
+            comments: { orderBy: { dateAdded: "desc" } },
+            author: { select: { id: true, username:true } }
+        },
+        orderBy: { dateAdded: "desc" },
     })
+
+    res.json({ post })
 }
