@@ -50,6 +50,22 @@ export const addPost = async (req, res) => {
     res.sendStatus(200)
 }
 
-export const viewPost = async (req, res) => {
+export const viewPost = (req, res) => {
     res.json({ post: req.locals.post })
+}
+
+export const updatePost = async (req, res) => {
+    const post = await prisma.post.update({
+        where: { id: req.locals.post.id },
+        data: {
+            title: req.body.title,
+            content: req.body.content
+        }
+    })
+    res.json({status: 200, post })
+}
+
+export const deletePost = async (req, res) => {
+    const post = await prisma.post.delete({ where: {id: req.locals.post.id }})
+    res.json({status: 200, post })
 }

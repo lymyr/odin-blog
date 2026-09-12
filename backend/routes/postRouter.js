@@ -1,34 +1,41 @@
 import { Router } from "express";
-import { addPost, getPublicPosts, viewPost } from "../controllers/postController.js";
-import { PostValidation } from "../lib/validations.js";
+import { addPost, deletePost, getPublicPosts, updatePost, viewPost } from "../controllers/postController.js";
+import { PostValidation, validationThrowerHelper } from "../lib/validations.js";
 import isAdmin from "../middleware/isAdmin.js";
 
 const postRouter = Router()
 
 postRouter.get('/', 
-    PostValidation.pageMiddleware, 
+    PostValidation.page,
+    validationThrowerHelper, 
     getPublicPosts
 )
 
 postRouter.post('/', 
     isAdmin, 
-    PostValidation.postMiddleware, 
+    PostValidation.post, 
+    validationThrowerHelper,
     addPost
 )
 
 postRouter.get('/:postId', 
-    PostValidation.postIdMiddleware, 
+    PostValidation.postIdPublic,
+    validationThrowerHelper, 
     viewPost
 )
 
 postRouter.put('/:postId', 
     isAdmin, 
-    PostValidation.postIdMiddleware
+    PostValidation.postIdPrivate,
+    validationThrowerHelper,
+    updatePost
 )
 
 postRouter.delete('/:postId', 
     isAdmin, 
-    PostValidation.postIdMiddleware
+    PostValidation.postIdPrivate,
+    validationThrowerHelper,
+    deletePost
 )
 
 export default postRouter
