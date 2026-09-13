@@ -16,7 +16,7 @@ class Validation {
 
 
 export class PostValidation extends Validation {
-    static #postId = () => param("postId").trim().exists().withMessage("Please add a postId")
+    static postId = () => param("postId").trim().exists().withMessage("Please add a postId")
         .isInt().withMessage("postId should be an integer").bail().toInt()
 
     static page = query("page").exists().withMessage("Please add a page query")
@@ -30,7 +30,7 @@ export class PostValidation extends Validation {
             .isLength({min: 1, max: 255}).withMessage("Content should not exceed 255 characters")
     ]
         
-    static postIdPublic = this.#postId().custom(async (id, {req}) => {
+    static postIdPublic = this.postId().custom(async (id, {req}) => {
         const post = await prisma.post.findFirst({
             where: { id, isPublished: true },
             select: { 
@@ -51,7 +51,7 @@ export class PostValidation extends Validation {
 
     // admin route
     // used for updating and deleting specific posts
-    static postIdPrivate = this.#postId().custom(async (id, {req}) => {
+    static postIdPrivate = this.postId().custom(async (id, {req}) => {
             const post = await prisma.post.findFirst({
                 where: { id, authorId: req.locals.user.id },
                 select: { 
@@ -75,4 +75,19 @@ export class adminValidation extends Validation {
         body("username").trim().notEmpty().withMessage("Please enter a username"),
         body("password").trim().notEmpty().withMessage("Please enter a password")
     ]
+}
+
+
+export class commentValidation extends Validation {
+    static username = body("username").trim().isLength({ max: 20 }).withMessage("Username should not exceed 20 characters")
+    static comment = body("comment").trim().notEmpty().withMessage("Please add a comment")
+        .isLength({min: 1, max: 120 }).withMessage("Comment should not exceed 120 characters")
+
+    static commentId = param("commentId").exists().withMessage("Please add a commentId param")
+        .isInt().withMessage("commentId must be an integer").bail().toInt()
+        .custom(async id => {
+            const c = await prisma.comment.findFirst({ where: {id} })
+            if (!c)
+                throw new Error("Comment doesn't exist")
+        })
 }

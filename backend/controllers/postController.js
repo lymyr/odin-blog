@@ -34,6 +34,7 @@ export const getPosts = async (req, res) => {
 }
 
 export const addPost = async (req, res) => {
+    // todo: remove and replace with throwerHelper
     const err = validationResult(req)
     if (!err.isEmpty())
         return res.status(400).json(err.mapped())
@@ -59,7 +60,8 @@ export const updatePost = async (req, res) => {
         where: { id: req.locals.post.id },
         data: {
             title: req.body.title,
-            content: req.body.content
+            content: req.body.content,
+            isPublished: req.body.isPublished ? req.body.isPublished : false
         }
     })
     res.json({status: 200, post })
