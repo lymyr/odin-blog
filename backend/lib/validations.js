@@ -71,10 +71,7 @@ export class PostValidation extends Validation {
 }
 
 export class adminValidation extends Validation {
-    static login = [
-        body("username").trim().notEmpty().withMessage("Please enter a username"),
-        body("password").trim().notEmpty().withMessage("Please enter a password")
-    ]
+    static login = body("password").trim().notEmpty().withMessage("Please enter a password")
 }
 
 
