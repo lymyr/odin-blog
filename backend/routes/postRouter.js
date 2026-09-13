@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addPost, deletePost, getPublicPosts, updatePost, viewPost } from "../controllers/postController.js";
+import { addPost, deletePost, getPosts, getPublicPosts, updatePost, viewPost } from "../controllers/postController.js";
 import { PostValidation, validationThrowerHelper } from "../lib/validations.js";
 import isAdmin from "../middleware/isAdmin.js";
 
@@ -9,6 +9,13 @@ postRouter.get('/',
     PostValidation.page,
     validationThrowerHelper, 
     getPublicPosts
+)
+
+postRouter.get('/admin', 
+    isAdmin,
+    PostValidation.page,
+    validationThrowerHelper, 
+    getPosts,
 )
 
 postRouter.post('/', 
@@ -37,5 +44,7 @@ postRouter.delete('/:postId',
     validationThrowerHelper,
     deletePost
 )
+
+// todo: add get ALL posts for admin view
 
 export default postRouter

@@ -34,11 +34,6 @@ export const getPosts = async (req, res) => {
 }
 
 export const addPost = async (req, res) => {
-    // todo: remove and replace with throwerHelper
-    const err = validationResult(req)
-    if (!err.isEmpty())
-        return res.status(400).json(err.mapped())
-
     await prisma.post.create({
         data: {
             authorId: req.locals.user.id,
