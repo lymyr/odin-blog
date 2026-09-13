@@ -1,4 +1,3 @@
-import { validationResult } from "express-validator"
 import { prisma } from "../lib/prisma.js"
 process.loadEnvFile()
 
