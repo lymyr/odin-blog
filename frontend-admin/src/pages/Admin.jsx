@@ -50,7 +50,7 @@ export default () => {
     return (
         <>
         <Header />
-        <FetchDependenciesContext value={[currentPage, setPosts, setMaxPage, setLoading, setError, nav, token]}>
+        <FetchDependenciesContext value={[currentPage, setPosts, setMaxPage, setLoading, setError, nav, posts, token]}>
             <PostForm post={selectedPost} setSelectedPost={setSelectedPost}/>
         </FetchDependenciesContext>
         <div>
