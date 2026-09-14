@@ -26,7 +26,7 @@ export class PostValidation extends Validation {
     static post = [
         body("title").trim().exists({values: "falsy"}).withMessage("Please add a title")
             .isLength({min: 1, max: 50}).withMessage("Title should not exceed 50 characters"),
-        body("content").trim().exists().withMessage("Please add content to your post")
+        body("content").trim().exists({values: "falsy"}).withMessage("Please add content to your post")
             .isLength({min: 1, max: 255}).withMessage("Content should not exceed 255 characters")
     ]
         

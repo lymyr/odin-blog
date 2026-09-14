@@ -4,6 +4,7 @@ import { NavLink, useNavigate, useParams } from "react-router"
 import Post from "../components/Post.jsx"
 import fetchPosts from "../helpers/fetchPosts.js"
 import FetchDependenciesContext from "../hooks/FetchDependenciesContext.js"
+import PostForm from "../components/PostForm.jsx"
 
 export default () => {
     const nav = useNavigate()
@@ -48,6 +49,9 @@ export default () => {
     return (
         <>
         <Header />
+        <FetchDependenciesContext value={[currentPage, setPosts, setMaxPage, setLoading, setError, nav, token]}>
+            <PostForm />
+        </FetchDependenciesContext>
         <div>
             {loading && 
                 <h1>Loading</h1>
