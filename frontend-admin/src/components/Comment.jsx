@@ -1,12 +1,10 @@
 import { useContext, useState } from "react"
-import FetchDependenciesContext from "../hooks/FetchDependenciesContext"
+import PostsContext from "../hooks/PostsContext"
 
 export default ({comment}) => {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState()
-    const states = useContext(FetchDependenciesContext)
-    const setPosts = states[1]
-    const posts = states[states.length-2]
+    const [posts, setPosts] = useContext(PostsContext)
 
     return (
         <div>

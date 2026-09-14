@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useNavigate } from "react-router"
 
 async function handleSubmit(password, setError, setLoading, nav) {

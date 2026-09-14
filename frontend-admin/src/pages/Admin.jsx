@@ -5,6 +5,7 @@ import Post from "../components/Post.jsx"
 import fetchPosts from "../helpers/fetchPosts.js"
 import FetchDependenciesContext from "../hooks/FetchDependenciesContext.js"
 import PostForm from "../components/PostForm.jsx"
+import PostsContext from "../hooks/PostsContext.js"
 
 export default () => {
     const nav = useNavigate()
@@ -50,8 +51,10 @@ export default () => {
     return (
         <>
         <Header />
-        <FetchDependenciesContext value={[currentPage, setPosts, setMaxPage, setLoading, setError, nav, posts, token]}>
-            <PostForm post={selectedPost} setSelectedPost={setSelectedPost}/>
+        <FetchDependenciesContext value={[currentPage, setPosts, setMaxPage, setLoading, setError, nav, token]}>
+            <PostsContext value={[posts, setPosts]}>
+                <PostForm post={selectedPost} setSelectedPost={setSelectedPost}/>
+            </PostsContext>
         </FetchDependenciesContext>
         <div>
             {
