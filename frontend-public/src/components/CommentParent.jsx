@@ -42,8 +42,9 @@ export default ({posts, setPosts, post}) => {
                 }
                 catch(e) {
                     setError(e)
+                } finally {
+                    setLoading(false)
                 }
-                setLoading(false)
             }}>
                 <h4>Add Comment</h4>
                 <div>

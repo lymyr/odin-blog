@@ -1,13 +1,12 @@
-import { Link, useParams } from "react-router"
+import { Link } from "react-router"
 
-export default ({post, currentPage, children}) => {
+export default ({post, currentPage }) => {
     
     return (
         <>
         <Link to={`/${post.id}?page=${currentPage}`}>
         <div 
             className={post.isPublished ? "published" : undefined}
-            onClick={() => setOpen(true)}
         >
             <div>
                 <div>

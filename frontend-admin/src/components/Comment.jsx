@@ -16,6 +16,7 @@ export default ({comment}) => {
             <button 
                 disabled={loading}
                 onClick={async () => {
+                    setLoading(true)
                     try {
                          if (!loading) {
                             const url = import.meta.env.DEV ? "http://localhost:3000" : import.meta.env.VITE_API_URL
@@ -36,8 +37,9 @@ export default ({comment}) => {
                     }
                     catch(e) {
                         setError(e.message)
+                    } finally {
+                        setLoading(false)
                     }
-                    setLoading(false)
             }}> { loading ? "deleting..." : "delete" }</button>
             {error && <p>{error}</p>}
         </div>
