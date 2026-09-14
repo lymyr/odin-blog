@@ -4,7 +4,7 @@ import Login from "./pages/Login.jsx";
 
 export default createBrowserRouter([
     {
-        path: "/",
+        path: "/:page?",
         element: <Admin />
     },
     {
