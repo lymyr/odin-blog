@@ -20,7 +20,7 @@ export const getPublicPosts = async (req, res) => {
     const countQuery = prisma.post.count({ where: {isPublished: true }})
     const [posts, count] = await Promise.all([postsQuery, countQuery])
     
-    res.json({ posts, maxPage: Math.ceil(count/10) })
+    res.json({ posts, maxPage: Math.ceil(count/postAmount) })
 }
 
 export const getPosts = async (req, res) => {
@@ -32,10 +32,10 @@ export const getPosts = async (req, res) => {
         take: postAmount,
         skip: req.query.page > 1 ? (parseInt(req.query.page)-1)*postAmount : 0
     })
-    const countQuery = prisma.post.count({ where: {isPublished: true }})
+    const countQuery = prisma.post.count()
     const [posts, count] = await Promise.all([postsQuery, countQuery])
 
-    res.json({ posts, maxPage: Math.ceil(count/10) })
+    res.json({ posts, maxPage: Math.ceil(count/postAmount) })
 }
 
 export const addPost = async (req, res) => {
@@ -79,7 +79,7 @@ export const updatePost = async (req, res) => {
             isPublished: req.body.isPublished ? req.body.isPublished : false
         }
     })
-    res.json({status: 200, post })
+    res.sendStatus(200)
 }
 
 export const deletePost = async (req, res) => {

@@ -1,16 +1,27 @@
-import { useState, useContext } from "react"
+import { useState, useContext, useEffect } from "react"
 import fetchPosts from "../helpers/fetchPosts.js"
 import FetchDependenciesContext from "../hooks/FetchDependenciesContext.js"
 
-export default ({post}) => {
-    const [title, setTitle] = useState(post ? post.title : "")
-    const [content, setContent] = useState(post ? post.content : "")
-    const [isPublished, setIsPublished] = useState(post ? post.isPublished : false)
+export default ({post, setSelectedPost}) => {
+    const [title, setTitle] = useState("")
+    const [content, setContent] = useState("")
+    const [isPublished, setIsPublished] = useState(false)
+    const [id, setId] = useState()
     const [error, setError] = useState()
     const [titleError, setTitleError] = useState()
     const [contentError, setContentError] = useState()
     const [loading, setLoading] = useState(false)
     const fetchDependencies = useContext(FetchDependenciesContext)
+
+    useEffect(() => {
+        if (post) {
+            setTitle(post.title)
+            setContent(post.content)
+            setIsPublished(post.isPublished)
+            setId(post.id)
+        }
+    }, [post])
+
     return (
         <div>
             <form onSubmit={async (e) => {
@@ -21,8 +32,8 @@ export default ({post}) => {
                     setLoading(true)
                     const url = import.meta.env.DEV ? "http://localhost:3000" : import.meta.env.VITE_API_URL
                     try {
-                        const res = await fetch(`${url}/v1/posts`, {
-                            method: "post",
+                        const res = await fetch(`${url}/v1/posts${post ? `/${id}` : ""}`, {
+                            method: post ? "put" : "post",
                             headers: {
                                 'Content-Type': 'application/json',
                                 Authorization: `Bearer ${fetchDependencies[fetchDependencies.length - 1]}`
@@ -47,6 +58,7 @@ export default ({post}) => {
                             setTitle("")
                             setContent("")
                             setIsPublished(false)
+                            setSelectedPost()
                             fetchPosts(...fetchDependencies)
                         }
                             
@@ -71,9 +83,18 @@ export default ({post}) => {
                     <label htmlFor="isPublished">Publish</label>
                     <input id="isPublished" type="checkbox" checked={isPublished} onChange={e => setIsPublished(!isPublished)}></input>
                 </div>
-                <button disabled={loading}>
-                    {loading ? "Loading..." : post ? "Save" : "Submit"}
-                </button>
+
+                <div>
+                    {post && <button type="button" onClick={() => {
+                        setTitle("")
+                        setContent("")
+                        setIsPublished(false)
+                        setSelectedPost()
+                    }}>Cancel</button>}
+                    <button disabled={loading}>
+                        {loading ? "Loading..." : post ? "Save" : "Submit"}
+                    </button>
+                </div>
             </form>
             {error && error}
         </div>

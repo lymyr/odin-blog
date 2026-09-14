@@ -16,6 +16,7 @@ export default () => {
     const [error, setError] = useState(null)
     const [maxPage, setMaxPage] = useState(1)
     const token = localStorage.getItem("JWT_TOKEN")
+    const [selectedPost, setSelectedPost] = useState()
 
     useEffect(() => {
         let amnt = []
@@ -44,26 +45,29 @@ export default () => {
             controller.abort()
             ignore = true
         }
-    }, [])
+    }, [currentPage])
 
     return (
         <>
         <Header />
         <FetchDependenciesContext value={[currentPage, setPosts, setMaxPage, setLoading, setError, nav, token]}>
-            <PostForm />
+            <PostForm post={selectedPost} setSelectedPost={setSelectedPost}/>
         </FetchDependenciesContext>
         <div>
-            {loading && 
-                <h1>Loading</h1>
-            }
-            {error && 
-                <h1>{error ? error : "Something went wrong"}</h1>
-            }
-            {posts.length > 0 && 
+            {
+            loading ?
+                <h1>Loading</h1> :
+            error ?
+                <h1>{error ? error : "Something went wrong"}</h1> :
+            posts.length > 0 ?
                 <>
                     <FetchDependenciesContext value={[currentPage, setPosts, setMaxPage, setLoading, setError, nav, token]}>
                         <div>
-                            {posts.map(post => <Post post={post} posts={posts} setPosts={setPosts} key={post.id}/>)}
+                            {posts.map(post => <Post 
+                                post={post} 
+                                onClick={() => {setSelectedPost(post)}}
+                                key={post.id}
+                            />)}
                         </div>
                     </FetchDependenciesContext>
                     <div>
@@ -77,7 +81,8 @@ export default () => {
                             )
                         })}
                     </div>
-                </>
+                </> :
+                <h1>No posts yet</h1>
             }
         </div>
         </>

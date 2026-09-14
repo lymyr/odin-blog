@@ -2,7 +2,7 @@ import { useState, useContext } from "react"
 import FetchDependenciesContext from "../hooks/FetchDependenciesContext.js"
 import fetchPosts from "../helpers/fetchPosts.js"
 
-export default ({post, posts, setPosts}) => {
+export default ({post, onClick}) => {
     const [error, setError] = useState("")
     const [ignore, setIgnore] = useState(false)
     const fetchDependencies = useContext(FetchDependenciesContext)
@@ -10,14 +10,15 @@ export default ({post, posts, setPosts}) => {
     const url = import.meta.env.DEV ? "http://localhost:3000" : import.meta.env.VITE_API_URL
 
     return (
-        <div className={post.isPublished ? "published" : undefined}>
+        <div className={post.isPublished ? "published" : undefined} onClick={onClick}>
             <div>
                 <div>
                     <h3>{post.title}</h3>
                     <p>{new Date(post.dateAdded).toLocaleDateString()}, {new Date(post.dateAdded).toLocaleTimeString()}</p>
                 </div>
                 <button
-                    onClick={async () => {
+                    onClick={async (e) => {
+                        e.stopPropagation()
                         if (!ignore) {
                             try {
                                 setIgnore(true)
