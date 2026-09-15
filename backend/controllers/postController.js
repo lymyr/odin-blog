@@ -9,6 +9,7 @@ export const getPublicPosts = async (req, res) => {
         select: { 
             id: true, 
             title: true, 
+            content: true,
             dateAdded: true, 
             comments: true,
             author: { select: { id: true, username:true } } 

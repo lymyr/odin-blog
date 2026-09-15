@@ -1,0 +1,48 @@
+.container form {
+    margin-block: 16px;
+    padding: 20px 24px;
+    box-shadow: 1px 1px 4px rgb(206, 206, 206);
+}
+
+.labelInput {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.container button {
+    margin-top: 12px;
+    min-width: 120px;
+}
+
+.container h4 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+}
+
+.comments {
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+    gap: 16px;
+    margin-inline: 24px;
+}
+
+.comment {
+    padding-bottom: 12px;
+}
+
+.comment:not(:last-child) {
+    border-bottom: 1px solid gray;
+}
+
+.comment > div p:first-child {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.comment > div p:last-child {
+    font-size: 0.8rem;
+    color: gray;
+    margin-bottom: 8px;
+}

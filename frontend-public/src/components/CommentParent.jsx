@@ -1,4 +1,5 @@
 import { useState } from "react"
+import styles from "./CommentParent.module.css"
 
 export default ({posts, setPosts, post}) => {
     const [username, setUsername] = useState("")
@@ -7,7 +8,7 @@ export default ({posts, setPosts, post}) => {
     const [loading, setLoading] = useState(false)
 
     return (
-        <div>
+        <div className={styles.container}>
             <form onSubmit={async (e) => {
                 setLoading(true)
                 e.preventDefault()
@@ -48,12 +49,12 @@ export default ({posts, setPosts, post}) => {
             }}>
                 <h4>Add Comment</h4>
                 <div>
-                    <div>
+                    <div className={styles.labelInput}>
                         <label htmlFor="username">Username</label>
                         <input id='username' value={username} onChange={e => setUsername(e.target.value)} />
                         {error && error.username && <p>{error.username.msg}</p>}
                     </div>
-                    <div>
+                    <div className={styles.labelInput}>
                         <label htmlFor="comment">Comment*</label>
                         <textarea id='comment' value={comment} onChange={e => setComment(e.target.value)}/>
                             {error && error.comment && <p>{error.comment.msg}</p>}
@@ -61,13 +62,13 @@ export default ({posts, setPosts, post}) => {
                 </div>
                 <button disabled={loading}>{loading ? "Submitting..." : "Submit"}</button>
             </form>
-            <div>
+            <div className={styles.comments}>
                 {post.comments.map(c => {
                     return (
-                    <div key={c.id}>
+                    <div key={c.id} className={styles.comment}>
                         <div>
                             <p>{c.username}</p>
-                            {new Date(c.dateAdded).toLocaleDateString()}, {new Date(c.dateAdded).toLocaleTimeString()}
+                            <p>{new Date(c.dateAdded).toLocaleDateString()}, {new Date(c.dateAdded).toLocaleTimeString()}</p>
                         </div>
                         <p >{c.comment}</p>
                     </div>

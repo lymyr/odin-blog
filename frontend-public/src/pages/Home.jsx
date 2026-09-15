@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useNavigate, useParams, useSearchParams } from "react-router"
 import Post from "../components/Post.jsx"
 import CommentParent from "../components/CommentParent.jsx"
+import styles from "./Home.module.css"
 
 export default () => {
     const [loading, setLoading] = useState(true)
@@ -51,28 +52,42 @@ export default () => {
     }, [searchParams.get("page")])
 
     return (
-        <>
+        <main>
             { 
-                loading ? <h1>Loading...</h1> : 
                 error ? <h1>{error.message}</h1> :
+                loading ? <div>
+                    <h1 className={styles.loading}>Loading</h1>
+                    <p>lmao</p>
+                    <p>Might take a while for render to wake up D:</p>
+                </div> : 
                 <>
                 { 
-                    posts.map(post => {
-                        return (
-                            <div key={post.id}>
-                                <Post post={post} currentPage={searchParams.get("page")} />
-                                {params.postId == post.id && 
-                                    <CommentParent posts={posts} setPosts={setPosts} post={post} />
-                                }
-                            </div>
-                        )
-                    })
+                    <div className={styles.postContainer}>
+                        {posts.map(post => {
+                            return (
+                                <div key={post.id} className={styles.post}>
+                                    <Post post={post} currentPage={searchParams.get("page")} />
+                                    {params.postId == post.id &&
+                                        <div className={styles.commentParent}>
+                                            <CommentParent posts={posts} setPosts={setPosts} post={post} />
+                                        </div>
+                                    }
+                                </div>
+                            )
+                        })}
+                    </div>
                 }
-                {
-                    visiblePages.map((n) => <button onClick={() => { nav(`/?page=${n}`)}}>{n}</button>)
-                }
+
+                <div className={styles.pages}>
+                    {visiblePages.map((n) => <button 
+                        onClick={() => { nav(`/?page=${n}`)}} 
+                        key={n}
+                        disabled={n == searchParams.get("page") ? true : false}
+                    >{n}</button>)}
+                </div>
+    
                 </>
             }
-        </>
+        </main>
     )
 }

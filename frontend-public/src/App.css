@@ -1,0 +1,14 @@
+:root {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: rgb(230, 230, 230);
+}
+
+header {
+    padding: 20px 32px;
+    margin-bottom: 32px;
+    background-color: white;
+    box-shadow: 1px 0px 4px rgb(196, 196, 196)
+}
