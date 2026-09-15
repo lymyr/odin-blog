@@ -30,23 +30,25 @@ export default () => {
 
     useEffect(() => {
         const controller = new AbortController();
-        try {
-            (async () => {
+
+        (async () => {
+            try {
                 setLoading(true)
                 const url = import.meta.env.DEV ? "http://localhost:3000" : import.meta.env.VITE_API_URL
                 const res = await fetch(`${url}/v1/posts?page=${searchParams.get("page")}`, {
                     signal: controller.signal
                 })
                 const r = await res.json()
+                if (r.posts.length == 0) 
+                    throw new Error("No post available")
                 setPosts(r.posts)
                 setMaxPage(r.maxPage)
                 setLoading(false)
                 setError(false)
-            })()
-        }
-        catch(e) {
-            setError(e)
-        }
+            } catch(e) {
+                setError(e)
+            }
+        })()
         
         return () => controller.abort()
     }, [searchParams.get("page")])
