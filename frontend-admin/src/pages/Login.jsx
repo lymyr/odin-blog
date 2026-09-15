@@ -10,10 +10,10 @@ export default () => {
 
     async function handleSubmit() {
         setLoading(true)
-        const url = import.meta.env.DEV ? "http://localhost:3000/" : import.meta.env.VITE_API_URL
+        const url = import.meta.env.DEV ? "http://localhost:3000" : import.meta.env.VITE_API_URL
         
         try {
-            let r = await fetch(`${url}v1/admin`, {
+            let r = await fetch(`${url}/v1/admin`, {
                 method: "POST",
                 body: JSON.stringify({ password: pass }),
                 headers: {
