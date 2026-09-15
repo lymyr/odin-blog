@@ -7,7 +7,12 @@ import cors from "cors"
 process.loadEnvFile()
 
 const app = express()
-app.use(cors())
+
+const corsConfig = process.env.ORIGINS ? {
+    origin: process.env.ORIGINS.split(","), 
+    optionsSuccessStatus: 200, } 
+    : {}
+app.use(cors(corsConfig))
 app.use(express.json())
 app.use(express.urlencoded({extended: true }))
 app.use("/v1/posts", postRouter)
