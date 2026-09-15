@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from "react"
 import fetchPosts from "../helpers/fetchPosts.js"
 import FetchDependenciesContext from "../hooks/FetchDependenciesContext.js"
 import Comment from "./Comment.jsx"
+import styles from "./PostForm.module.css"
 
 export default ({post, setSelectedPost}) => {
     const [title, setTitle] = useState("")
@@ -26,8 +27,8 @@ export default ({post, setSelectedPost}) => {
     }, [post])
 
     return (
-        <div>
-            <div>
+        <div className={styles.container}>
+            <div className={styles.postForm}>
                 <form onSubmit={async (e) => {
                     e.preventDefault()
                     if (!loading) {
@@ -86,7 +87,7 @@ export default ({post, setSelectedPost}) => {
                         <label htmlFor="isPublished">Publish</label>
                         <input id="isPublished" type="checkbox" checked={isPublished} onChange={e => setIsPublished(!isPublished)}></input>
                     </div>
-                    <div>
+                    <div className={styles.postFormBtns}>
                         {post && <button type="button" onClick={() => {
                             setTitle("")
                             setContent("")
@@ -102,7 +103,7 @@ export default ({post, setSelectedPost}) => {
             </div>
 
             { post?.comments && 
-                <div>
+                <div className={styles.commentsContainer}>
                     {post.comments.map(comment => {
                         return <Comment 
                             comment={comment}  

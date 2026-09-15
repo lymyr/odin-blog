@@ -1,0 +1,36 @@
+.post {
+    padding: 32px 20px;
+    display: flex;
+    flex-direction: column;
+    gap:16px;
+    background-color: white;
+    box-shadow: 1px 1px 4px rgb(178, 178, 178);
+    border-radius: 4px;
+}
+
+.post:hover {
+    background-color: rgb(247, 251, 255);
+    cursor: pointer;
+    box-shadow: 2px 2px 6px rgb(155, 155, 155);
+}
+
+.post > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.post button {
+    height: fit-content;
+}
+
+.header h3 {
+    font-size: 1.4rem;
+    letter-spacing: -0.5px;
+}
+
+.header p {
+    font-size: 0.8rem;
+    color: gray;
+}

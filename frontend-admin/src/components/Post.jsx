@@ -1,6 +1,7 @@
 import { useState, useContext } from "react"
 import FetchDependenciesContext from "../hooks/FetchDependenciesContext.js"
 import fetchPosts from "../helpers/fetchPosts.js"
+import styles from "./Post.module.css"
 
 export default ({post, onClick}) => {
     const [error, setError] = useState("")
@@ -10,9 +11,9 @@ export default ({post, onClick}) => {
     const url = import.meta.env.DEV ? "http://localhost:3000" : import.meta.env.VITE_API_URL
 
     return (
-        <div className={post.isPublished ? "published" : undefined} onClick={onClick}>
+        <div className={`${styles.post} ${post.isPublished ? styles.published : undefined}`} onClick={onClick}>
             <div>
-                <div>
+                <div className={styles.header}>
                     <h3>{post.title}</h3>
                     <p>{new Date(post.dateAdded).toLocaleDateString()}, {new Date(post.dateAdded).toLocaleTimeString()}</p>
                 </div>

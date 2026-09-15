@@ -6,6 +6,7 @@ import fetchPosts from "../helpers/fetchPosts.js"
 import FetchDependenciesContext from "../hooks/FetchDependenciesContext.js"
 import PostForm from "../components/PostForm.jsx"
 import PostsContext from "../hooks/PostsContext.js"
+import styles from "./Admin.module.css"
 
 export default () => {
     const nav = useNavigate()
@@ -49,45 +50,45 @@ export default () => {
     }, [currentPage])
 
     return (
-        <>
-        <Header />
-        <FetchDependenciesContext value={[currentPage, setPosts, setMaxPage, setLoading, setError, nav, token]}>
-            <PostsContext value={[posts, setPosts]}>
-                <PostForm post={selectedPost} setSelectedPost={setSelectedPost}/>
-            </PostsContext>
-        </FetchDependenciesContext>
-        <div>
-            {
-            loading ?
-                <h1>Loading</h1> :
-            error ?
-                <h1>{error ? error : "Something went wrong"}</h1> :
-            posts.length > 0 ?
-                <>
-                    <FetchDependenciesContext value={[currentPage, setPosts, setMaxPage, setLoading, setError, nav, token]}>
-                        <div>
-                            {posts.map(post => <Post 
-                                post={post} 
-                                onClick={() => {setSelectedPost(post)}}
-                                key={post.id}
-                            />)}
+        <div className={styles.supaContainer}>
+            <Header />
+            <FetchDependenciesContext value={[currentPage, setPosts, setMaxPage, setLoading, setError, nav, token]}>
+                <PostsContext value={[posts, setPosts]}>
+                    <PostForm post={selectedPost} setSelectedPost={setSelectedPost}/>
+                </PostsContext>
+            </FetchDependenciesContext>
+            <main>
+                {
+                loading ?
+                    <h1>Loading</h1> :
+                error ?
+                    <h1>{error ? error : "Something went wrong"}</h1> :
+                posts.length > 0 ?
+                    <>
+                        <FetchDependenciesContext value={[currentPage, setPosts, setMaxPage, setLoading, setError, nav, token]}>
+                            <div className={styles.postsContainer}>
+                                {posts.map(post => <Post 
+                                    post={post} 
+                                    onClick={() => {setSelectedPost(post)}}
+                                    key={post.id}
+                                />)}
+                            </div>
+                        </FetchDependenciesContext>
+                        <div className={styles.pageContainer}>
+                            {visiblePages.map(num => {
+                                return (
+                                    <NavLink to={`/${num}`} key={num}>
+                                        <button disabled={num == currentPage ? true : undefined}>
+                                            {num}
+                                        </button>
+                                    </NavLink>
+                                )
+                            })}
                         </div>
-                    </FetchDependenciesContext>
-                    <div>
-                        {visiblePages.map(num => {
-                            return (
-                                <NavLink to={`/${num}`} key={num}>
-                                    <button className={num == currentPage ? "current-page" : undefined}>
-                                        {num}
-                                    </button>
-                                </NavLink>
-                            )
-                        })}
-                    </div>
-                </> :
-                <h1>No posts yet</h1>
-            }
+                    </> :
+                    <h1>No posts yet</h1>
+                }
+            </main>
         </div>
-        </>
     )
 }

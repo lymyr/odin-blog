@@ -1,5 +1,6 @@
 import { useContext, useState } from "react"
 import PostsContext from "../hooks/PostsContext"
+import styles from "./Comment.module.css"
 
 export default ({comment}) => {
     const [loading, setLoading] = useState(false)
@@ -7,7 +8,7 @@ export default ({comment}) => {
     const [posts, setPosts] = useContext(PostsContext)
 
     return (
-        <div>
+        <div className={styles.comment}>
             <div>
                 <p>{comment.username}</p>
                 <p>{new Date(comment.dateAdded).toLocaleDateString()}, {new Date(comment.dateAdded).toLocaleTimeString()}</p>

@@ -1,0 +1,62 @@
+.loginContainer,
+.loginContainer > div,
+.loginContainer form,
+.loginContainer form div {
+    display: flex;
+    flex-direction: column;
+}
+
+.loginContainer {
+    gap: 32px;
+}
+
+.loginContainer > div {
+    gap: 16px
+}
+
+.loginContainer form {
+    gap:16px;
+}
+
+.loginContainer form div {
+    gap:4px;
+}
+
+.loginContainer {
+    max-width: 340px;
+    margin: auto;
+    margin-top: 20vh;
+    padding: 24px;
+    padding-bottom: 40px;
+
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 1px 1px 4px rgb(144, 144, 144);
+}
+
+.loading {
+    text-align: center;
+    color: gray;
+    animation: load ease-in-out 800ms infinite alternate-reverse;
+}
+
+@keyframes load {
+    0% {
+        transform: translateX(-32px);
+        letter-spacing: -2px;
+    }
+
+    50% {
+        letter-spacing: 8px;
+    }
+
+    100% {
+        transform: translateX(32px);
+        letter-spacing: -2px;
+    }
+}
+
+div:has(.loading) p {
+    font-size: 0.8rem;
+    color: gray
+}

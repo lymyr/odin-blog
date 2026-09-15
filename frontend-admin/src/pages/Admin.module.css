@@ -1,0 +1,29 @@
+.supaContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.supaContainer > * {
+    padding-inline: 24px;
+}
+
+.postsContainer {
+    display: flex;
+    flex-direction: column;
+    gap:16px;
+}
+
+.pageContainer {
+    margin-top: 12px;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.pageContainer button {
+    --size: 40px;
+    min-height: var(--size);
+    min-width: var(--size);
+}
