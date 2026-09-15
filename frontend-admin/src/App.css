@@ -20,3 +20,7 @@ header button {
     background-color: transparent;
     border: none;
 }
+
+.error {
+    color: rgb(151, 21, 21)
+}

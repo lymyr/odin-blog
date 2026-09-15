@@ -46,7 +46,7 @@ export default ({post, onClick}) => {
                     disabled={ignore}
                 >{ignore ? "Deleting..." : "Delete"}</button>
             </div>
-            {error && <p>{error}</p>}
+            {error && <p className="error">{error}</p>}
             <p>{post.content}</p>
         </div>
     )

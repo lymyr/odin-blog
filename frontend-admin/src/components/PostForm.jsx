@@ -76,12 +76,12 @@ export default ({post, setSelectedPost}) => {
                     <div>
                         <label htmlFor="title">Title</label>
                         <input id="title" value={title} onChange={e => setTitle(e.target.value)}></input>
-                        {titleError && <p>{titleError}</p>}
+                        {titleError && <p className="error">{titleError}</p>}
                     </div>
                     <div>
                         <label htmlFor="content">Content</label>
                         <textarea id="content" value={content} onChange={e => setContent(e.target.value)}></textarea>
-                        {contentError && <p>{contentError}</p>}
+                        {contentError && <p className="error">{contentError}</p>}
                     </div>
                     <div>
                         <label htmlFor="isPublished">Publish</label>
@@ -99,7 +99,7 @@ export default ({post, setSelectedPost}) => {
                         </button>
                     </div>
                 </form>
-                <p>{error && error}</p>
+                <p className="error">{error && error}</p>
             </div>
 
             { post?.comments && 

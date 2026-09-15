@@ -52,15 +52,16 @@ export default ({posts, setPosts, post}) => {
                     <div className={styles.labelInput}>
                         <label htmlFor="username">Username</label>
                         <input id='username' value={username} onChange={e => setUsername(e.target.value)} />
-                        {error && error.username && <p>{error.username.msg}</p>}
+                        {error && error.username && <p className="error">{error.username.msg}</p>}
                     </div>
                     <div className={styles.labelInput}>
                         <label htmlFor="comment">Comment*</label>
                         <textarea id='comment' value={comment} onChange={e => setComment(e.target.value)}/>
-                            {error && error.comment && <p>{error.comment.msg}</p>}
+                            {error && error.comment && <p className="error">{error.comment.msg}</p>}
                     </div>
                 </div>
                 <button disabled={loading}>{loading ? "Submitting..." : "Submit"}</button>
+                {error && error.message && <p className="error">{error.message}</p>}
             </form>
             <div className={styles.comments}>
                 {post.comments.map(c => {

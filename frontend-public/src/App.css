@@ -12,3 +12,7 @@ header {
     background-color: white;
     box-shadow: 1px 0px 4px rgb(196, 196, 196)
 }
+
+.error {
+    color: rgb(151, 21, 21)
+}

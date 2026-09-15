@@ -42,7 +42,7 @@ export default ({comment}) => {
                         setLoading(false)
                     }
             }}> { loading ? "deleting..." : "delete" }</button>
-            {error && <p>{error}</p>}
+            {error && <p className="error">{error}</p>}
         </div>
     )
 }

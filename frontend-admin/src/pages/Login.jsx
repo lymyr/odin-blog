@@ -58,7 +58,7 @@ export default () => {
                                 value={pass}
                                 type="password"
                             ></input>
-                            {error && <p>{error}</p>}
+                            {error && <p className="error">{error}</p>}
                         </div>
                         <button>Login</button>
                     </form>
